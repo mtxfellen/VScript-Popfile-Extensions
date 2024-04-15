@@ -2,41 +2,30 @@ IncludeScript("popextensions/customattributes")
 
 PrecacheScriptSound("Announcer.MVM_Get_To_Upgrade")
 
-const EFL_USER = 1048576
 if (!("ScriptLoadTable" in ROOT))
 	::ScriptLoadTable   <- {}
 if (!("ScriptUnloadTable" in ROOT))
 	::ScriptUnloadTable <- {}
 
 ::MissionAttributes <- {
+	// Set MissionAttributes.DebugText = true after IncludeScript()
+	//  and before a MissionAttr() call to use debug mode
+	DebugText = false
 
-	CurAttrs = {} // Array storing currently modified attributes.
-	ConVars  = {} //table storing original convar values
-	SoundsToReplace = {}
-
+	ConVars  = {} // Holds original ConVar values
 	ThinkTable      = {}
 	TakeDamageTable = {}
 	TakeDamageTablePost = {}
 	SpawnHookTable  = {}
 	DeathHookTable  = {}
-	//InitWaveTable = {}
 	DisconnectTable = {}
 	StartWaveTable = {}
 	ChangeClassTable = {}
+	SoundsToReplace = {}
 
-	DebugText        = false
 	RaisedParseError = false
-
 	PathNum = 0
-
 	RedMoneyValue = 0
-
-	// function InitWave() {
-	// 	foreach (_, func in MissionAttributes.InitWaveTable) func()
-
-	// 	// foreach (attr, value in MissionAttributes.CurAttrs) printl(attr+" = "+value)
-	// 	// MissionAttributes.RaisedParseError = false
-	// }
 
 	function Cleanup()
 	{
@@ -974,25 +963,25 @@ function MissionAttributes::MissionAttr(...) {
 					if (player.GetTeam() == TF_TEAM_PVE_INVADERS && value > 0)
 					{
 						player.SetCustomModelWithClassAnimations(format("models/player/%s.mdl", classname))
-						if (value & 2) 
+						if (value & 2)
 						{
 							PopExtUtil.CreatePlayerWearable(player, format("models/player/items/%s/%s_zombie.mdl", classname, classname))
 							SetPropBool(player, "m_bForcedSkin", true)
 							SetPropInt(player, "m_nForcedSkin", player.GetSkin() + 4)
 						}
 					}
-	
+
 					if (player.GetTeam() == TF_TEAM_PVE_INVADERS && value & 4)
 					{
 
-						player.SetCustomModelWithClassAnimations(format("models/player/%s.mdl", classname))						
-						if (value & 8) 
+						player.SetCustomModelWithClassAnimations(format("models/player/%s.mdl", classname))
+						if (value & 8)
 						{
 							format(PopExtUtil.CreatePlayerWearable(player, "models/player/items/%s/%s_zombie.mdl"), classname, classname)
 							SetPropBool(player, "m_bForcedSkin", true)
 							SetPropInt(player, "m_nForcedSkin", player.GetSkin() + 4)
 						}
-						
+
 					}
 				}
 
@@ -2443,7 +2432,6 @@ function MissionAttributes::MissionAttr(...) {
 	// Add attribute to clean-up list if its modification was successful.
 	if (success) {
 		MissionAttributes.DebugLog(format("Added mission attribute %s", attr))
-		MissionAttributes.CurAttrs[attr] <- value
 	}
 }
 

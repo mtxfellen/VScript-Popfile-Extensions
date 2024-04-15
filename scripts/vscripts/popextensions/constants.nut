@@ -252,6 +252,9 @@ CONST.MVM_CLASS_FLAG_MINIBOSS        <- 1 << 3 // Giant icon flag. Support and m
 CONST.MVM_CLASS_FLAG_ALWAYSCRIT      <- 1 << 4 // Crit icon flag. Support and mission icons do not display crit outline when set
 CONST.MVM_CLASS_FLAG_SUPPORT_LIMITED <- 1 << 5 // Support limited flag. Game uses it together with support flag
 
+// FEntityEFlags
+const EFL_USER = 1048576	// EFL_IS_BEING_LIFTED_BY_BARNACLE redef, unused in TF2
+
 // trigger_* entity spawnflags
 const SF_TRIGGER_ALLOW_CLIENTS                = 1
 const SF_TRIGGER_ALLOW_NPCS                   = 2
